@@ -1,25 +1,34 @@
-import logo from './logo.svg';
+import { useState } from 'react';
+import ReactTooltip from 'react-tooltip';
+import { QueryCache, ReactQueryCacheProvider } from 'react-query';
+
+import MapChart from './MapChart';
 import './App.css';
 
-function App() {
+const queryCache = new QueryCache();
+
+export default function App() {
+  const [content, setContent] = useState('');
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ReactQueryCacheProvider queryCache={queryCache}>
+      <div className="App">
+        <h1 className="Title">Spotify Top Track by Region</h1>
+        <div className="Subtitle">Hover on a country to see the most streamed track of the day</div>
+        <MapChart setTooltipContent={setContent} />
+        <div className="Footer-text">
+          Powered by{' '}
+          <a
+            className="Link"
+            href="https://spotifycharts.com/regional"
+            target="_BLANK"
+            rel="noopener noreferrer"
+          >
+            Spotify Charts
+          </a>
+        </div>
+        <ReactTooltip html={true}>{content}</ReactTooltip>
+      </div>
+    </ReactQueryCacheProvider>
   );
 }
-
-export default App;

@@ -1,0 +1,8 @@
+svg {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+path {
+  cursor: pointer;
+}
