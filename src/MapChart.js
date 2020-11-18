@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { useQuery } from 'react-query';
 import { ZoomableGroup, ComposableMap, Geographies, Geography, Graticule } from 'react-simple-maps';
+import Loader from './Loader';
 
 import './MapChart.css';
 
@@ -12,11 +13,11 @@ const withCommas = (num) => Intl.NumberFormat().format(num);
 const MapChart = ({ setTooltipContent }) => {
   const { isLoading, data } = useQuery('repoData', () =>
     fetch(
-      'https://github.com/wobsoriano/spotify-charts-map/blob/master/data/spotifycharts.json'
+      'https://raw.githubusercontent.com/wobsoriano/spotify-charts-map/master/data/spotifycharts.json'
     ).then((res) => res.json())
   );
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loader />;
 
   return (
     <>
