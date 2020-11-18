@@ -19,7 +19,7 @@ export default function App() {
   return (
     <ReactQueryCacheProvider queryCache={queryCache}>
       <div className="App">
-        <h1 className="Title">Spotify Top Track by Region</h1>
+        <h1 className="Title">Spotify Top Tracks by Region</h1>
         <div className="Subtitle">Hover on a country to see the most streamed track of the day</div>
 
         {isLoading ? <Loader /> : <MapChart countries={data} setTooltipContent={setContent} />}
