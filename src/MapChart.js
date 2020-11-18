@@ -9,12 +9,14 @@ const geoUrl =
 
 const withCommas = (num) => Intl.NumberFormat().format(num);
 
-const countriesWithSpotify = Object.keys(spotifyData);
-
 const MapChart = ({ setTooltipContent }) => {
-  const { isLoading, error, data } = useQuery('repoData', () =>
-    fetch('https://api.github.com/repos/tannerlinsley/react-query').then((res) => res.json())
+  const { isLoading, data } = useQuery('repoData', () =>
+    fetch(
+      'https://github.com/wobsoriano/spotify-charts-map/blob/master/data/spotifycharts.json'
+    ).then((res) => res.json())
   );
+
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <>
@@ -24,7 +26,7 @@ const MapChart = ({ setTooltipContent }) => {
           <Geographies geography={geoUrl}>
             {({ geographies }) =>
               geographies.map((geo) => {
-                const exists = countriesWithSpotify.find((i) => i === geo.properties.ISO_A2);
+                const exists = Object.keys(data).find((i) => i === geo.properties.ISO_A2);
                 return (
                   <Geography
                     key={geo.rsmKey}
@@ -33,7 +35,7 @@ const MapChart = ({ setTooltipContent }) => {
                     onMouseEnter={() => {
                       const { NAME, ISO_A2 } = geo.properties;
                       if (exists) {
-                        const countryData = spotifyData[ISO_A2];
+                        const countryData = data[ISO_A2];
                         setTooltipContent(
                           `${NAME}:<br />Track: <span style="font-weight: bold;">${
                             countryData.trackName
@@ -50,7 +52,7 @@ const MapChart = ({ setTooltipContent }) => {
                     }}
                     onClick={() => {
                       if (exists) {
-                        const { url } = spotifyData[geo.properties.ISO_A2];
+                        const { url } = data[geo.properties.ISO_A2];
                         const win = window.open(url, '_blank');
                         win.focus();
                       }
