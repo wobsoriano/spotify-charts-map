@@ -1,8 +1,9 @@
-import React, { memo } from 'react';
+import React, { useEffect, memo } from 'react';
 import { useQuery } from 'react-query';
 import { ZoomableGroup, ComposableMap, Geographies, Geography, Graticule } from 'react-simple-maps';
-import Loader from './Loader';
+import ReactTooltip from 'react-tooltip';
 
+import Loader from './Loader';
 import './MapChart.css';
 
 const geoUrl =
@@ -36,6 +37,7 @@ const MapChart = ({ setTooltipContent }) => {
                     onMouseEnter={() => {
                       const { NAME, ISO_A2 } = geo.properties;
                       if (exists) {
+                        ReactTooltip.rebuild();
                         const countryData = data[ISO_A2];
                         setTooltipContent(
                           `${NAME}:<br />Track: <span style="font-weight: bold;">${
