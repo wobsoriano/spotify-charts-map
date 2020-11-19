@@ -24,7 +24,6 @@ async function getTopTrackPerCountry(countryCode) {
                         streams: data[3],
                         url: data[4]
                     }
-                    console.log('resolving', obj);
                     resolve(obj);
                 } else {
                     resolve()
@@ -41,6 +40,7 @@ async function run() {
     for (const country of Object.keys(countries)) {
         const result = await getTopTrackPerCountry(country);
         if (result) {
+            console.log(country.toUpperCase(), result);
             data[country.toUpperCase()] = result;
         }
     }
